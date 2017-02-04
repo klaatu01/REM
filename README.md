@@ -3,7 +3,7 @@ REM is command line reminder tool.
 
 ---
 
-Useage
+Usage
 
 To see current reminders and to setup:
 
