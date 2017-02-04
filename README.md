@@ -10,8 +10,11 @@ To see current reminders and to setup:
 `rem`
 
 To add a reminder:
-`-a <reminder>`
+
+`rem -a <reminder>`
 
 To delete a reminder:
-`-d <reminder index>`
 
+`rem -d <reminder index>`
+
+---
