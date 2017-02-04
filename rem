@@ -1,0 +1,61 @@
+#!/bin/zsh
+
+LIB=~/.reminder
+LINE=""
+NORM="\e[0m"
+RED="\e[91m"
+GREEN="\e[92m"
+WHITE="\e[39m"
+
+add_reminder(){
+        echo $LINE >> $LIB
+}
+
+remove_reminder(){
+	a=0
+	mv $LIB "${LIB}_temp"
+        while read p; do
+                ((a=$a+1))
+		if [ $a -ne $LINE ]; then
+			echo $p >> $LIB
+		fi
+        done < "${LIB}_temp"
+	rm "${LIB}_temp"
+}
+
+remind(){
+	if [ ! -s $LIB ]; then
+
+	else
+		echo "${WHITE}Reminders:${NORM}"
+		a=0
+	        while read p; do
+	                ((a=$a+1))
+                	echo "${RED}$a. ${GREEN}$p ${WHITE}\n"
+        	done < $LIB
+	fi
+}
+
+
+if [ ! -f $LIB ]; then
+	touch $LIB
+	echo "Created reminder file in location: $LIB"
+fi
+
+if [ -z "$1" ]; then
+	remind;
+else
+	case "$1" in
+		-a | --add)
+			LINE="$2";
+			add_reminder;
+			exit 0;;
+		-d | --delete)
+			LINE="$2";
+			remove_reminder;
+			exit 0;;
+		-p | --purge)
+			rm $LIB;
+			exit 0;;
+	esac
+fi
